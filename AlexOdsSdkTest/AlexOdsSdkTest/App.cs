@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Java.Util;
 using ODS.SDK.Mobile.Shared.Controls;
 using ODS.Infrastructure.HyperMedia;
 
@@ -29,6 +28,8 @@ namespace AlexOdsSdkTest
 
             mediaPlayer = new HyperMediaPlayer();
             mediaPlayer.BackgroundColor = Color.Green;
+		    mediaPlayer.VerticalOptions = LayoutOptions.FillAndExpand;
+		    mediaPlayer.HorizontalOptions = LayoutOptions.FillAndExpand;
             mediaPlayer.CurrentStateChanged += delegate(object sender, StateChangedEventArgs e)
             {
                 if (e.NewAction == HyperMediaStateAction.PlayerPlayedToEndOfVideo)
@@ -53,8 +54,10 @@ namespace AlexOdsSdkTest
 						button,
                         mediaPlayer
 					}
-				}
+				},
+                Padding = new Thickness(0,20,0,0)
 			};
+            
 		}
 
 	    private void OnButtonClicked(object sender, EventArgs e)

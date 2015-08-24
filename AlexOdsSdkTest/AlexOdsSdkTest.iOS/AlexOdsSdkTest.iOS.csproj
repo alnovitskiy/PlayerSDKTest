@@ -115,6 +115,9 @@
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="ODS.SDK.Auto.iOSUnified">
+      <HintPath>..\..\..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.Auto.iOSUnified.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core" />
@@ -131,6 +134,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Xamarin.iOS" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.iOSUnified\ODS.SDK.iOSUnified.csproj">
+      <Project>{33c45d81-5740-4a3d-abcb-2a347cef3450}</Project>
+      <Name>ODS.SDK.iOSUnified</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="..\AlexOdsSdkTest\AlexOdsSdkTest.projitems" Label="Shared" Condition="Exists('..\AlexOdsSdkTest\AlexOdsSdkTest.projitems')" />
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

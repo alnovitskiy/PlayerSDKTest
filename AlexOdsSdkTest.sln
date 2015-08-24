@@ -15,12 +15,15 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODS.SDK.Android", "..\Orion
 EndProject
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "ODS.SDK.Mobile.Shared", "..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.Shared\ODS.SDK.Mobile.Shared.shproj", "{ADAF5C16-A150-4250-882E-8B9CA650720B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ODS.SDK.iOSUnified", "..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.iOSUnified\ODS.SDK.iOSUnified.csproj", "{33C45D81-5740-4A3D-ABCB-2A347CEF3450}"
+EndProject
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.Shared\ODS.SDK.Mobile.Shared.projitems*{adaf5c16-a150-4250-882e-8b9ca650720b}*SharedItemsImports = 13
 		AlexOdsSdkTest\AlexOdsSdkTest\AlexOdsSdkTest.projitems*{3eb21ceb-194c-433b-86b5-bf69883c551b}*SharedItemsImports = 4
 		AlexOdsSdkTest\AlexOdsSdkTest\AlexOdsSdkTest.projitems*{8f3af6c4-80f5-4b85-bd36-ca3608a8272d}*SharedItemsImports = 13
 		AlexOdsSdkTest\AlexOdsSdkTest\AlexOdsSdkTest.projitems*{0a316501-2bf9-471f-8581-f3f3185a33e6}*SharedItemsImports = 4
+		..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.Shared\ODS.SDK.Mobile.Shared.projitems*{33c45d81-5740-4a3d-abcb-2a347cef3450}*SharedItemsImports = 4
 		..\OrionsSystemsSDK\ODS.SDK\ODS.SDK.Shared\ODS.SDK.Mobile.Shared.projitems*{0a62c273-cd6f-431f-afa8-a2dfa995720f}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,6 +129,30 @@ Global
 		{0A62C273-CD6F-431F-AFA8-A2DFA995720F}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{0A62C273-CD6F-431F-AFA8-A2DFA995720F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{0A62C273-CD6F-431F-AFA8-A2DFA995720F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Ad-Hoc|Any CPU.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Ad-Hoc|Any CPU.Build.0 = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Ad-Hoc|iPhone.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Ad-Hoc|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Ad-Hoc|Mixed Platforms.Build.0 = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.AppStore|Any CPU.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.AppStore|Any CPU.Build.0 = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.AppStore|iPhone.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.AppStore|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.AppStore|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.AppStore|Mixed Platforms.Build.0 = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -133,5 +160,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{0A62C273-CD6F-431F-AFA8-A2DFA995720F} = {E19A3E40-B7E7-4639-BD15-1A2FDFE78EEB}
 		{ADAF5C16-A150-4250-882E-8B9CA650720B} = {E19A3E40-B7E7-4639-BD15-1A2FDFE78EEB}
+		{33C45D81-5740-4A3D-ABCB-2A347CEF3450} = {E19A3E40-B7E7-4639-BD15-1A2FDFE78EEB}
 	EndGlobalSection
 EndGlobal
