@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AlexOdsSdkTest.Controls;
 using ODS.SDK.Mobile.Shared.Controls;
 using ODS.Infrastructure.HyperMedia;
 
@@ -11,54 +12,83 @@ namespace AlexOdsSdkTest
 {
 	public class App : Application
 	{
-	    private HyperMediaPlayer mediaPlayer;
+	    private Player mediaPlayer;
 
 		public App ()
 		{
-		    var button = new Button()
-		    {
-		        Text = "Play", 
-                TextColor = Color.White, 
+		    MainPage = CreateTestPage();
+		}
+
+	    private ContentPage CreateTestPage()
+	    {
+	        var clipTitleLabel = new Label()
+	        {
+	            Text = "CLIP TITLE",
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                TextColor = Color.White,
+                BackgroundColor = Color.Black,
+                XAlign = TextAlignment.Center
+	        };
+            var button = new Button()
+            {
+                Text = "Play",
+                TextColor = Color.White,
                 BackgroundColor = Color.Gray,
                 VerticalOptions = LayoutOptions.Start,
                 HorizontalOptions = LayoutOptions.FillAndExpand
-		    };
+            };
 
-		    button.Clicked += OnButtonClicked;
+            button.Clicked += OnButtonClicked;
 
-            mediaPlayer = new HyperMediaPlayer();
-            mediaPlayer.BackgroundColor = Color.Green;
-		    mediaPlayer.VerticalOptions = LayoutOptions.FillAndExpand;
-		    mediaPlayer.HorizontalOptions = LayoutOptions.FillAndExpand;
+	        var playerSlider = new Slider()
+	        {
+                VerticalOptions = LayoutOptions.End,
+                BackgroundColor = Color.Black,
+	            Value = 0
+	        };
+
+            mediaPlayer = new Player();
             mediaPlayer.CurrentStateChanged += delegate(object sender, StateChangedEventArgs e)
             {
                 if (e.NewAction == HyperMediaStateAction.PlayerPlayedToEndOfVideo)
                 {
-                    var playlist = mediaPlayer.Playlist;
-                    if (playlist != null)
-                    {
-                        var nextItemIndex = (playlist.CurrentItemIndex + 1) % playlist.ItemCount;
-                        playlist.CurrentItem = playlist.Items[nextItemIndex];
-                    }
+                    mediaPlayer.Next();
                 }
             };
 
+	        mediaPlayer.PlaylistItemLoaded += delegate(object sender, EventArgs e)
+	        {
+                if (mediaPlayer.CurrentItem == null) return;
+                playerSlider.Maximum = mediaPlayer.CurrentVideoDuration.TotalMilliseconds;
+                if (mediaPlayer.CurrentItem==null) return;
+	            clipTitleLabel.Text = mediaPlayer.CurrentItem.Title;
 
-			// The root page of your application
-			MainPage = new ContentPage {
-				Content = new StackLayout {
+	        };
+
+	        mediaPlayer.PositionChanged += delegate(object sender, PositionChangedArgs e)
+	        {
+	            playerSlider.Value = e.NewPosition.TotalMilliseconds;
+	        };
+
+
+            return new ContentPage
+            {
+                Content = new StackLayout
+                {
                     Orientation = StackOrientation.Vertical,
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand,
-					Children = {
+                    Children = {
+                        clipTitleLabel,
 						button,
-                        mediaPlayer
+                        playerSlider,
+                        mediaPlayer,
 					}
-				},
-                Padding = new Thickness(0,20,0,0)
-			};
-            
-		}
+                },
+                Padding = new Thickness(0, 20, 0, 0)
+            };
+	        
+	    }
 
 	    private void OnButtonClicked(object sender, EventArgs e)
 	    {
@@ -89,6 +119,7 @@ namespace AlexOdsSdkTest
             mediaPlayer.Play();
 
 	    }
+
 
 	}
 }
