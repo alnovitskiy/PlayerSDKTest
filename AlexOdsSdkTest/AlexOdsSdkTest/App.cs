@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using AlexOdsSdkTest.Controls;
+using AlexOdsSdkTest.Helpers;
 using ODS.SDK.Mobile.Shared.Controls;
 using ODS.Infrastructure.HyperMedia;
 
@@ -14,7 +15,7 @@ namespace AlexOdsSdkTest
 	{
 	    private Player mediaPlayer;
 
-		public App ()
+	    public App ()
 		{
 		    MainPage = CreateTestPage();
 		}
@@ -29,9 +30,28 @@ namespace AlexOdsSdkTest
                 BackgroundColor = Color.Black,
                 XAlign = TextAlignment.Center
 	        };
+
+            var currentStateLabel = new Label() { TextColor = Color.Red, BackgroundColor = Color.Black };
+            //currentStateLabel.BindingContext = mediaPlayer;
+            //currentStateLabel.SetBinding(Label.TextProperty, "CurrentPlayerState", BindingMode.Default, new PlayerStateConverter());
+
+            var playPauseBtn = new Button() {Text = "Pause"};
+	        var nextBtn = new Button() {Text = "Next"};
+            var prevBtn = new Button() { Text = "Prev" };
+
+	        var informLayout = new StackLayout
+	        {
+                Spacing = 20,
+                Orientation = StackOrientation.Horizontal,
+                VerticalOptions = LayoutOptions.Center,
+                HorizontalOptions = LayoutOptions.Start,
+                IsVisible = false,
+                Children = { clipTitleLabel, currentStateLabel, playPauseBtn, nextBtn, prevBtn }
+	        };
+
             var button = new Button()
             {
-                Text = "Play",
+                Text = "Load play list and play",
                 TextColor = Color.White,
                 BackgroundColor = Color.Gray,
                 VerticalOptions = LayoutOptions.Start,
@@ -48,21 +68,29 @@ namespace AlexOdsSdkTest
 	        };
 
             mediaPlayer = new Player();
+
+            playerSlider.BindingContext = mediaPlayer;
+            playerSlider.SetBinding(Slider.MaximumProperty, "CurrentVideoDuration", BindingMode.Default, new TimeConverter());
+            //playerSlider.SetBinding(Slider.ValueProperty, "Position", BindingMode.TwoWay, new TimeConverter());
+
+
             mediaPlayer.CurrentStateChanged += delegate(object sender, StateChangedEventArgs e)
             {
                 if (e.NewAction == HyperMediaStateAction.PlayerPlayedToEndOfVideo)
                 {
                     mediaPlayer.Next();
                 }
+                currentStateLabel.Text = mediaPlayer.CurrentPlayerState.ToString();
+                if (mediaPlayer.CurrentPlayerState == HyperMediaPlayerState.Playing)
+                    playPauseBtn.Text="Pause";
+                else playPauseBtn.Text = "Play"; ;
             };
 
 	        mediaPlayer.PlaylistItemLoaded += delegate(object sender, EventArgs e)
 	        {
+	            if (!informLayout.IsVisible) informLayout.IsVisible = true;
                 if (mediaPlayer.CurrentItem == null) return;
-                playerSlider.Maximum = mediaPlayer.CurrentVideoDuration.TotalMilliseconds;
-                if (mediaPlayer.CurrentItem==null) return;
 	            clipTitleLabel.Text = mediaPlayer.CurrentItem.Title;
-
 	        };
 
 	        mediaPlayer.PositionChanged += delegate(object sender, PositionChangedArgs e)
@@ -70,6 +98,21 @@ namespace AlexOdsSdkTest
 	            playerSlider.Value = e.NewPosition.TotalMilliseconds;
 	        };
 
+	        nextBtn.Clicked += delegate(object sender, EventArgs e)
+	        {
+                mediaPlayer.Next();
+	        };
+            prevBtn.Clicked += delegate(object sender, EventArgs e)
+            {
+                mediaPlayer.Prev();
+            };
+
+            playPauseBtn.Clicked += delegate(object sender, EventArgs e)
+            {
+                if (mediaPlayer.CurrentPlayerState == HyperMediaPlayerState.Playing)
+                    mediaPlayer.Pause();
+                else mediaPlayer.Play();
+            };
 
             return new ContentPage
             {
@@ -79,7 +122,7 @@ namespace AlexOdsSdkTest
                     VerticalOptions = LayoutOptions.FillAndExpand,
                     HorizontalOptions = LayoutOptions.FillAndExpand,
                     Children = {
-                        clipTitleLabel,
+                        informLayout,
 						button,
                         playerSlider,
                         mediaPlayer,

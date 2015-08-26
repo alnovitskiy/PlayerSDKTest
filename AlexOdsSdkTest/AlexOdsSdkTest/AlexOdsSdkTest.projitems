@@ -11,6 +11,8 @@
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)App.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Controls\Player.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\PlayerStateConverter.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Helpers\TimeConverter.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="$(MSBuildThisFileDirectory)GettingStarted.Xamarin" />

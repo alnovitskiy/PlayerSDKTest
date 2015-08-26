@@ -27,6 +27,7 @@ namespace AlexOdsSdkTest.Controls
             {
                 var nextItemIndex = (playlist.CurrentItemIndex + 1) % playlist.ItemCount;
                 playlist.CurrentItem = playlist.Items[nextItemIndex];
+                Play();
             }
         }
 
@@ -34,12 +35,14 @@ namespace AlexOdsSdkTest.Controls
         {
             if (index >= Playlist.Items.Length) return;
             CurrentItem = Playlist.Items[index];
+            Play();
         }
 
         public void Prev()
         {
             if (Playlist.CurrentItemIndex == 0) return;
             CurrentItem = Playlist.Items[Playlist.CurrentItemIndex - 1];
+            Play();
         }
 
         public void Replay()
