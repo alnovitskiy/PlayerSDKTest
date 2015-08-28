@@ -10,6 +10,7 @@ namespace AlexOdsSdkTest.Helpers
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (value == null) return 1;
             return ((TimeSpan)value).TotalMilliseconds < 1 ? 1 : ((TimeSpan)value).TotalMilliseconds;
         }
 
