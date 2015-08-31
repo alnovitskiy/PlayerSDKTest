@@ -12,6 +12,9 @@ namespace AlexOdsSdkTest.Pages
     public class PlayerView : ContentPage
     {
         private Player mediaPlayer;
+        private bool lockPlayerSliderChangeValueEvent;
+        private bool lockPlayerPositionChangedEvent;
+        private Slider playerSlider;
 
         public PlayerView()
         {
@@ -25,8 +28,6 @@ namespace AlexOdsSdkTest.Pages
             };
 
             var currentStateLabel = new Label() { TextColor = Color.Red, BackgroundColor = Color.Black };
-            //currentStateLabel.BindingContext = mediaPlayer;
-            //currentStateLabel.SetBinding(Label.TextProperty, "CurrentPlayerState", BindingMode.Default, new PlayerStateConverter());
 
             var playPauseBtn = new Button() { Text = "Pause" };
             var nextBtn = new Button() { Text = "Next" };
@@ -44,7 +45,7 @@ namespace AlexOdsSdkTest.Pages
 
             var button = new Button()
             {
-                Text = "Load play list and play",
+                Text = "Load playlist and play",
                 TextColor = Color.White,
                 BackgroundColor = Color.Gray,
                 VerticalOptions = LayoutOptions.Start,
@@ -53,7 +54,18 @@ namespace AlexOdsSdkTest.Pages
 
             button.Clicked += OnButtonClicked;
 
-            var playerSlider = new Slider()
+            var buttonLargeList = new Button()
+            {
+                Text = "Load large playlist and play",
+                TextColor = Color.White,
+                BackgroundColor = Color.Gray,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+
+            buttonLargeList.Clicked += OnButtonLargeListClicked;
+
+            playerSlider = new Slider()
             {
                 VerticalOptions = LayoutOptions.End,
                 BackgroundColor = Color.Black,
@@ -74,9 +86,7 @@ namespace AlexOdsSdkTest.Pages
                     mediaPlayer.Next();
                 }
                 currentStateLabel.Text = mediaPlayer.CurrentPlayerState.ToString();
-                if (mediaPlayer.CurrentPlayerState == HyperMediaPlayerState.Playing)
-                    playPauseBtn.Text = "Pause";
-                else playPauseBtn.Text = "Play"; ;
+                playPauseBtn.Text = mediaPlayer.CurrentPlayerState == HyperMediaPlayerState.Playing ? "Pause" : "Play"; ;
             };
 
             mediaPlayer.PlaylistItemLoaded += delegate(object sender, EventArgs e)
@@ -88,8 +98,17 @@ namespace AlexOdsSdkTest.Pages
 
             mediaPlayer.PositionChanged += delegate(object sender, PositionChangedArgs e)
             {
+                lockPlayerSliderChangeValueEvent = true;
                 playerSlider.Value = e.NewPosition.TotalMilliseconds;
+                lockPlayerSliderChangeValueEvent = false;
             };
+
+            /*playerSlider.ValueChanged += delegate(object sender, ValueChangedEventArgs e)
+            {
+                if (lockPlayerSliderChangeValueEvent) return;
+                var delta = e.NewValue - e.OldValue;
+                mediaPlayer.SeekBy(new TimeSpan(0, 0, 0, 0, (int)delta));
+            };*/
 
             nextBtn.Clicked += delegate(object sender, EventArgs e)
             {
@@ -116,6 +135,7 @@ namespace AlexOdsSdkTest.Pages
                 {
                     informLayout,
                     button,
+                    buttonLargeList,
                     playerSlider,
                     mediaPlayer,
                 }
@@ -146,6 +166,28 @@ namespace AlexOdsSdkTest.Pages
                 ServerAddress = "http://synergygrid.smartarrow.aware.net/wms/2/177635/106490481.mp4",
                 AutoPlay = true
             });
+
+            var hyperPlaylist = new ODS.Infrastructure.HyperMedia.Playlist { Items = items.ToArray() };
+
+            mediaPlayer.LoadPlayList(hyperPlaylist);
+            mediaPlayer.Play();
+        }
+
+        private void OnButtonLargeListClicked(object sender, EventArgs e)
+        {
+            var items = new List<PlaylistItem>();
+
+            var fullGameList = new FullGameList();
+
+            foreach (var url in fullGameList.Instant)
+            {
+                items.Add(new PlaylistItem
+                {
+                    Title = url,
+                    ServerAddress = url,
+                    AutoPlay = true
+                });
+            }
 
             var hyperPlaylist = new ODS.Infrastructure.HyperMedia.Playlist { Items = items.ToArray() };
 
