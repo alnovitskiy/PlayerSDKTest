@@ -65,6 +65,18 @@ namespace AlexOdsSdkTest.Pages
 
             buttonLargeList.Clicked += OnButtonLargeListClicked;
 
+
+            var buttonWMV = new Button()
+            {
+                Text = "Load WMV file and play",
+                TextColor = Color.White,
+                BackgroundColor = Color.Gray,
+                VerticalOptions = LayoutOptions.Start,
+                HorizontalOptions = LayoutOptions.FillAndExpand
+            };
+
+            buttonWMV.Clicked += OnButtonWMVListClicked;
+
             playerSlider = new Slider()
             {
                 VerticalOptions = LayoutOptions.End,
@@ -136,6 +148,7 @@ namespace AlexOdsSdkTest.Pages
                     informLayout,
                     button,
                     buttonLargeList,
+                    buttonWMV,
                     playerSlider,
                     mediaPlayer,
                 }
@@ -194,6 +207,26 @@ namespace AlexOdsSdkTest.Pages
             mediaPlayer.LoadPlayList(hyperPlaylist);
             mediaPlayer.Play();
 
+        }
+
+
+        private void OnButtonWMVListClicked(object sender, EventArgs e)
+        {
+            var items = new List<PlaylistItem>
+            {
+                new PlaylistItem
+                {
+                    Title = "Test WMV",
+                    ServerAddress = "http://synergygrid.smartarrow.aware.net/wms/2/96736/45454916.wmv",
+                    AutoPlay = true
+                }
+            };
+
+            var hyperPlaylist = new ODS.Infrastructure.HyperMedia.Playlist { Items = items.ToArray() };
+
+            mediaPlayer.LoadPlayList(hyperPlaylist);
+            mediaPlayer.Play();
+            
         }
 
         protected override void OnDisappearing()
